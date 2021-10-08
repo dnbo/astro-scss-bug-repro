@@ -1,0 +1,75 @@
+---
+import { Markdown } from 'astro/components';
+---
+<article>
+    <section>
+        <Markdown>
+            # Issue
+`npm run dev` works fine while `npm run build` wont include the `/styles/app.css` in the output.
+
+ ## Folder structure that causes the bug
+
+If styles are arranged as below bug appears
+
+```
+/
+├── public/
+│   ├── robots.txt
+│   └── favicon.ico
+├── src/
+│   ├── assets/
+│   │   └── css
+|   |   |   └── app.css
+|   |   └── styles
+|   |       └── app.scss        (this file @import's the ../css/app.css file)
+```
+
+The css is then imported in the `index.astro` like below
+
+`<link rel="stylesheet" href={Astro.resolve('../assets/styles/app.css')} type="text/css">`
+        </Markdown>
+    </section>
+</article>
+
+<style>
+    article {
+        padding-top: 2em;
+        line-height: 1.5;
+    }
+    section {
+        margin-top: 2em;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        max-width: 70ch;
+    }
+
+    .banner {
+        text-align: center;
+        font-size: 1.2rem;
+        background: var(--color-light);
+        padding: 1em 1.5em;
+        padding-left: 0.75em;
+        border-radius: 4px;
+    }
+
+    pre,
+    code {
+        font-family: var(--font-mono);
+        background: var(--color-light);
+        border-radius: 4px;
+    }
+
+    pre {
+        padding: 1em 1.5em;
+    }
+
+    .tree {
+        line-height: 1.2;
+    }
+
+    code:not(.tree) {
+        padding: 0.125em;
+        margin: 0 -0.125em;
+    }
+</style>
